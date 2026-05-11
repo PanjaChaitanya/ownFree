@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import SectionHeading from '@/components/ui/SectionHeading';
 import TiltCard from '@/components/ui/TiltCard';
+import SpotlightCard from '@/components/ui/SpotlightCard';
 import { staggerContainer, fadeUp } from '@/animations/variants';
 
 const iconMap = {
@@ -62,9 +63,10 @@ function ServiceCard({ service }) {
 
   return (
     <motion.div variants={fadeUp}>
-      <TiltCard intensity={6} className="group h-full" style={{ perspective: '800px' }}>
+      <TiltCard intensity={6} className="group h-full">
       <Link href={`/services#${service.slug}`} className="block h-full">
-        <div className="card card-brand h-full p-6 flex flex-col">
+        <div className="card card-brand h-full overflow-hidden">
+        <SpotlightCard spotlightColor={`${service.color}08`} className="h-full p-6 flex flex-col">
           {/* Icon */}
           <div
             className="w-11 h-11 rounded-xl flex items-center justify-center mb-5 shrink-0"
@@ -96,6 +98,7 @@ function ServiceCard({ service }) {
             <span className="opacity-0 group-hover:opacity-100 transition-opacity">Learn more</span>
             <ArrowRight className="w-3.5 h-3.5 translate-x-0 group-hover:translate-x-1 transition-transform" />
           </div>
+        </SpotlightCard>
         </div>
       </Link>
       </TiltCard>

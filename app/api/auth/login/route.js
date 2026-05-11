@@ -13,7 +13,7 @@ export async function POST(request) {
       return error('Email and password are required');
     }
 
-    const user = await User.findOne({ email: email.toLowerCase() }).select('+password');
+    const user = await User.findOne({ email: email.toLowerCase() });
     if (!user || !user.isActive) {
       return error('Invalid credentials', 401);
     }
