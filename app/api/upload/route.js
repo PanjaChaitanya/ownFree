@@ -15,6 +15,7 @@ async function handleUpload(request) {
     const result = await uploadImage(image, folder || 'horizon-web-labs');
     return ok({ url: result.url, publicId: result.publicId });
   } catch (err) {
+    console.error('[Upload Error]', err?.message, err?.http_code);
     return serverError(err);
   }
 }

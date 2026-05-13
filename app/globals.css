@@ -29,10 +29,36 @@
 *::before,
 *::after {
   box-sizing: border-box;
+  cursor: default;
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Pointer on interactive elements */
+a,
+button,
+[role="button"],
+[role="tab"],
+[role="option"],
+input[type="submit"],
+input[type="button"],
+input[type="reset"],
+input[type="checkbox"],
+input[type="radio"],
+select,
+label,
+summary,
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* Text cursor only on actual text inputs */
+input:not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]):not([type="color"]),
+textarea,
+[contenteditable] {
+  cursor: text;
 }
 
 body {
@@ -70,10 +96,6 @@ body {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.10);
 }
 
-/* ─── Custom cursor — hide native on desktop ─── */
-@media (pointer: fine) {
-  *, *::before, *::after { cursor: none !important; }
-}
 
 /* ─── Public site card utilities ─── */
 .card {

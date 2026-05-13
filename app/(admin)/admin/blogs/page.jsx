@@ -1,11 +1,11 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Edit2, Trash2, X, Save, Eye, EyeOff } from 'lucide-react';
+import { Plus, Edit2, Trash2, Save, Eye, EyeOff } from 'lucide-react';
 import toast from 'react-hot-toast';
 import Button from '@/components/ui/Button';
 import ImageUpload from '@/components/admin/ImageUpload';
 import { AdminCard, AdminSection, FormField, inputClass, textareaClass, selectClass } from '@/components/admin/AdminCard';
+import AdminModal from '@/components/admin/AdminModal';
 import { slugify, formatDate } from '@/utils/helpers';
 
 const CATEGORIES = ['General', 'Web Development', 'Design', 'SEO', 'Business', 'Tutorial', 'News'];
@@ -115,68 +115,56 @@ export default function BlogsAdmin() {
         }
       </AdminSection>
 
-      <AnimatePresence>
-        {showForm && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-10 overflow-y-auto">
-            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowForm(false)} />
-            <motion.div initial={{ scale: 0.95, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.95, y: 20 }} className="relative w-full max-w-2xl glass-strong rounded-2xl p-6 mb-10">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-white font-bold text-lg">{editId ? 'Edit Post' : 'New Blog Post'}</h2>
-                <button onClick={() => setShowForm(false)} className="text-slate-400 hover:text-white"><X className="w-5 h-5" /></button>
-              </div>
-
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <FormField label="Title" required>
-                    <input value={form.title} onChange={(e) => setForm((f) => ({ ...f, title: e.target.value, slug: slugify(e.target.value) }))} className={inputClass} required />
-                  </FormField>
-                  <FormField label="Slug">
-                    <input value={form.slug} onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))} className={inputClass} />
-                  </FormField>
-                </div>
-                <div className="grid grid-cols-3 gap-4">
-                  <FormField label="Category">
-                    <select value={form.category} onChange={(e) => setForm((f) => ({ ...f, category: e.target.value }))} className={selectClass}>
-                      {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
-                    </select>
-                  </FormField>
-                  <FormField label="Author">
-                    <input value={form.author} onChange={(e) => setForm((f) => ({ ...f, author: e.target.value }))} className={inputClass} />
-                  </FormField>
-                  <FormField label="Read Time (min)">
-                    <input type="number" value={form.readTime} onChange={(e) => setForm((f) => ({ ...f, readTime: +e.target.value }))} className={inputClass} />
-                  </FormField>
-                </div>
-                <FormField label="Excerpt">
-                  <textarea value={form.excerpt} onChange={(e) => setForm((f) => ({ ...f, excerpt: e.target.value }))} className={textareaClass} rows={2} placeholder="Brief excerpt shown in listings..." />
-                </FormField>
-                <FormField label="Content (Markdown/HTML)" required>
-                  <textarea value={form.content} onChange={(e) => setForm((f) => ({ ...f, content: e.target.value }))} className={textareaClass} rows={8} required placeholder="Write your blog content here..." />
-                </FormField>
-                <FormField label="Tags" hint="Comma-separated">
-                  <input value={form.tags} onChange={(e) => setForm((f) => ({ ...f, tags: e.target.value }))} className={inputClass} placeholder="Next.js, Tutorial, Web Dev" />
-                </FormField>
-                <ImageUpload value={form.thumbnail} publicId={form.thumbnailPublicId} folder="blogs" label="Featured Image"
-                  onChange={({ url, publicId }) => setForm((f) => ({ ...f, thumbnail: url, thumbnailPublicId: publicId }))} />
-                <div className="flex gap-6">
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" checked={form.isPublished} onChange={(e) => setForm((f) => ({ ...f, isPublished: e.target.checked }))} className="w-4 h-4 accent-violet-500 rounded" />
-                    <span className="text-sm text-slate-300">Publish</span>
-                  </label>
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" checked={form.isFeatured} onChange={(e) => setForm((f) => ({ ...f, isFeatured: e.target.checked }))} className="w-4 h-4 accent-violet-500 rounded" />
-                    <span className="text-sm text-slate-300">Featured</span>
-                  </label>
-                </div>
-                <div className="flex gap-3 pt-2">
-                  <Button type="submit" loading={saving} icon={<Save className="w-4 h-4" />}>{editId ? 'Update Post' : 'Create Post'}</Button>
-                  <Button type="button" variant="ghost" onClick={() => setShowForm(false)}>Cancel</Button>
-                </div>
-              </form>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <AdminModal open={showForm} onClose={() => setShowForm(false)} title={editId ? 'Edit Post' : 'New Blog Post'}>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <FormField label="Title" required>
+              <input value={form.title} onChange={(e) => setForm((f) => ({ ...f, title: e.target.value, slug: slugify(e.target.value) }))} className={inputClass} required />
+            </FormField>
+            <FormField label="Slug">
+              <input value={form.slug} onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))} className={inputClass} />
+            </FormField>
+          </div>
+          <div className="grid grid-cols-3 gap-4">
+            <FormField label="Category">
+              <select value={form.category} onChange={(e) => setForm((f) => ({ ...f, category: e.target.value }))} className={selectClass}>
+                {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
+              </select>
+            </FormField>
+            <FormField label="Author">
+              <input value={form.author} onChange={(e) => setForm((f) => ({ ...f, author: e.target.value }))} className={inputClass} />
+            </FormField>
+            <FormField label="Read Time (min)">
+              <input type="number" value={form.readTime} onChange={(e) => setForm((f) => ({ ...f, readTime: +e.target.value }))} className={inputClass} />
+            </FormField>
+          </div>
+          <FormField label="Excerpt">
+            <textarea value={form.excerpt} onChange={(e) => setForm((f) => ({ ...f, excerpt: e.target.value }))} className={textareaClass} rows={2} placeholder="Brief excerpt shown in listings..." />
+          </FormField>
+          <FormField label="Content (Markdown/HTML)" required>
+            <textarea value={form.content} onChange={(e) => setForm((f) => ({ ...f, content: e.target.value }))} className={textareaClass} rows={8} required placeholder="Write your blog content here..." />
+          </FormField>
+          <FormField label="Tags" hint="Comma-separated">
+            <input value={form.tags} onChange={(e) => setForm((f) => ({ ...f, tags: e.target.value }))} className={inputClass} placeholder="Next.js, Tutorial, Web Dev" />
+          </FormField>
+          <ImageUpload value={form.thumbnail} publicId={form.thumbnailPublicId} folder="blogs" label="Featured Image"
+            onChange={({ url, publicId }) => setForm((f) => ({ ...f, thumbnail: url, thumbnailPublicId: publicId }))} />
+          <div className="flex gap-6">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" checked={form.isPublished} onChange={(e) => setForm((f) => ({ ...f, isPublished: e.target.checked }))} className="w-4 h-4 accent-violet-500 rounded" />
+              <span className="text-sm text-slate-300">Publish</span>
+            </label>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" checked={form.isFeatured} onChange={(e) => setForm((f) => ({ ...f, isFeatured: e.target.checked }))} className="w-4 h-4 accent-violet-500 rounded" />
+              <span className="text-sm text-slate-300">Featured</span>
+            </label>
+          </div>
+          <div className="flex gap-3 pt-2">
+            <Button type="submit" loading={saving} icon={<Save className="w-4 h-4" />}>{editId ? 'Update Post' : 'Create Post'}</Button>
+            <Button type="button" variant="ghost" onClick={() => setShowForm(false)}>Cancel</Button>
+          </div>
+        </form>
+      </AdminModal>
     </div>
   );
 }

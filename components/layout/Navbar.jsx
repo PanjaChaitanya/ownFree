@@ -149,7 +149,7 @@ export default function Navbar() {
           >
             <div
               onClick={() => setMobileOpen(false)}
-              className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+              className="absolute inset-0 bg-black/40 backdrop-blur-sm cursor-pointer"
             />
 
             <motion.div

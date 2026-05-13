@@ -1,10 +1,11 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Edit2, Trash2, X, Save, GripVertical } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Plus, Edit2, Trash2, Save, GripVertical } from 'lucide-react';
 import toast from 'react-hot-toast';
 import Button from '@/components/ui/Button';
 import { AdminCard, AdminSection, FormField, inputClass, textareaClass, selectClass } from '@/components/admin/AdminCard';
+import AdminModal from '@/components/admin/AdminModal';
 
 const CATEGORIES = ['General', 'Pricing', 'Process', 'Technical', 'Support'];
 const emptyForm = { question: '', answer: '', category: 'General', order: 0, isActive: true };
@@ -97,45 +98,34 @@ export default function FAQsAdmin() {
         }
       </AdminSection>
 
-      <AnimatePresence>
-        {showForm && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowForm(false)} />
-            <motion.div initial={{ scale: 0.95, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.95, y: 20 }} className="relative w-full max-w-lg glass-strong rounded-2xl p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-white font-bold text-lg">{editId ? 'Edit' : 'New'} FAQ</h2>
-                <button onClick={() => setShowForm(false)} className="text-slate-400 hover:text-white"><X className="w-5 h-5" /></button>
-              </div>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <FormField label="Category">
-                    <select value={form.category} onChange={(e) => setForm((f) => ({ ...f, category: e.target.value }))} className={selectClass}>
-                      {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
-                    </select>
-                  </FormField>
-                  <FormField label="Order">
-                    <input type="number" value={form.order} onChange={(e) => setForm((f) => ({ ...f, order: +e.target.value }))} className={inputClass} />
-                  </FormField>
-                </div>
-                <FormField label="Question" required>
-                  <input value={form.question} onChange={(e) => setForm((f) => ({ ...f, question: e.target.value }))} className={inputClass} required />
-                </FormField>
-                <FormField label="Answer" required>
-                  <textarea value={form.answer} onChange={(e) => setForm((f) => ({ ...f, answer: e.target.value }))} className={textareaClass} rows={4} required />
-                </FormField>
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" checked={form.isActive} onChange={(e) => setForm((f) => ({ ...f, isActive: e.target.checked }))} className="w-4 h-4 accent-violet-500 rounded" />
-                  <span className="text-sm text-slate-300">Active</span>
-                </label>
-                <div className="flex gap-3 pt-2">
-                  <Button type="submit" loading={saving} icon={<Save className="w-4 h-4" />}>{editId ? 'Update' : 'Create'}</Button>
-                  <Button type="button" variant="ghost" onClick={() => setShowForm(false)}>Cancel</Button>
-                </div>
-              </form>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <AdminModal open={showForm} onClose={() => setShowForm(false)} title={`${editId ? 'Edit' : 'New'} FAQ`} maxWidth="max-w-lg">
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <FormField label="Category">
+              <select value={form.category} onChange={(e) => setForm((f) => ({ ...f, category: e.target.value }))} className={selectClass}>
+                {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
+              </select>
+            </FormField>
+            <FormField label="Order">
+              <input type="number" value={form.order} onChange={(e) => setForm((f) => ({ ...f, order: +e.target.value }))} className={inputClass} />
+            </FormField>
+          </div>
+          <FormField label="Question" required>
+            <input value={form.question} onChange={(e) => setForm((f) => ({ ...f, question: e.target.value }))} className={inputClass} required />
+          </FormField>
+          <FormField label="Answer" required>
+            <textarea value={form.answer} onChange={(e) => setForm((f) => ({ ...f, answer: e.target.value }))} className={textareaClass} rows={4} required />
+          </FormField>
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" checked={form.isActive} onChange={(e) => setForm((f) => ({ ...f, isActive: e.target.checked }))} className="w-4 h-4 accent-violet-500 rounded" />
+            <span className="text-sm text-slate-300">Active</span>
+          </label>
+          <div className="flex gap-3 pt-2">
+            <Button type="submit" loading={saving} icon={<Save className="w-4 h-4" />}>{editId ? 'Update' : 'Create'}</Button>
+            <Button type="button" variant="ghost" onClick={() => setShowForm(false)}>Cancel</Button>
+          </div>
+        </form>
+      </AdminModal>
     </div>
   );
 }

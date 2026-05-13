@@ -1,8 +1,6 @@
 import { Inter } from 'next/font/google';
 import { Toaster } from 'react-hot-toast';
-import CustomCursor from '@/components/ui/CustomCursor';
-import SmoothScroll from '@/components/ui/SmoothScroll';
-import ScrollProgress from '@/components/ui/ScrollProgress';
+import ClickSpark from '@/components/ui/ClickSpark';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
@@ -37,10 +35,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className="bg-white text-zinc-900 font-sans antialiased cursor-none">
-        <SmoothScroll />
-        <CustomCursor />
-        <ScrollProgress />
+      <body className="bg-white text-zinc-900 font-sans antialiased">
+        <ClickSpark />
         {children}
         <Toaster
           position="top-right"

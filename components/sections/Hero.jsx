@@ -70,7 +70,7 @@ export default function Hero() {
   const contentOpacity = useTransform(scrollY, [0, 300], [1, 0.4]);
 
   const [hero, setHero] = useState({
-    badge: 'Premium Digital Agency',
+    badge: '',
     heading: 'We Craft Digital Experiences That Matter',
     subheading: 'Full-stack development, SEO, and design solutions crafted for startups and growing businesses worldwide.',
     primaryCta: { label: 'Start a Project', href: '/contact' },
@@ -129,21 +129,23 @@ export default function Hero() {
         <div className="max-w-4xl mx-auto text-center">
 
           {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: -20, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="mb-8"
-          >
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-violet-50 border border-violet-200 text-violet-700 text-sm font-semibold">
-              <motion.span
-                className="w-2 h-2 rounded-full bg-violet-500 shrink-0"
-                animate={{ scale: [1, 1.6, 1], opacity: [1, 0.4, 1] }}
-                transition={{ duration: 1.8, repeat: Infinity }}
-              />
-              {hero.badge}
-            </span>
-          </motion.div>
+          {hero.badge && (
+            <motion.div
+              initial={{ opacity: 0, y: -20, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="mb-8"
+            >
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-violet-50 border border-violet-200 text-violet-700 text-sm font-semibold">
+                <motion.span
+                  className="w-2 h-2 rounded-full bg-violet-500 shrink-0"
+                  animate={{ scale: [1, 1.6, 1], opacity: [1, 0.4, 1] }}
+                  transition={{ duration: 1.8, repeat: Infinity }}
+                />
+                {hero.badge}
+              </span>
+            </motion.div>
+          )}
 
           {/* Heading */}
           <h1 className="text-[2.75rem] sm:text-6xl lg:text-[5.25rem] font-black leading-[1.03] tracking-tight mb-8" style={{ perspective: '1000px' }}>

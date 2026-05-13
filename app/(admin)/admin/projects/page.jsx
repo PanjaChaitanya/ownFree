@@ -1,12 +1,13 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { Plus, Edit2, Trash2, Eye, EyeOff, Star, X, Save, ExternalLink, GitFork } from 'lucide-react';
+import { Plus, Edit2, Trash2, Eye, EyeOff, Star, Save, ExternalLink, GitFork } from 'lucide-react';
 import toast from 'react-hot-toast';
 import Button from '@/components/ui/Button';
 import ImageUpload from '@/components/admin/ImageUpload';
 import { AdminCard, AdminSection, FormField, inputClass, textareaClass, selectClass } from '@/components/admin/AdminCard';
+import AdminModal from '@/components/admin/AdminModal';
 import { slugify } from '@/utils/helpers';
 
 const CATEGORIES = ['Web App', 'SaaS', 'E-Commerce', 'Portfolio', 'Landing Page', 'Business Website', 'Mobile App', 'Other'];
@@ -131,92 +132,80 @@ export default function ProjectsAdmin() {
       </AdminSection>
 
       {/* Form Modal */}
-      <AnimatePresence>
-        {showForm && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-10 overflow-y-auto">
-            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowForm(false)} />
-            <motion.div initial={{ scale: 0.95, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.95, y: 20 }} className="relative w-full max-w-2xl glass-strong rounded-2xl p-6 mb-10">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-white font-bold text-lg">{editId ? 'Edit Project' : 'New Project'}</h2>
-                <button onClick={() => setShowForm(false)} className="text-slate-400 hover:text-white"><X className="w-5 h-5" /></button>
-              </div>
+      <AdminModal open={showForm} onClose={() => setShowForm(false)} title={editId ? 'Edit Project' : 'New Project'}>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <FormField label="Title" required>
+              <input value={form.title} onChange={(e) => setForm((f) => ({ ...f, title: e.target.value, slug: slugify(e.target.value) }))} className={inputClass} placeholder="Project Title" required />
+            </FormField>
+            <FormField label="Slug">
+              <input value={form.slug} onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))} className={inputClass} placeholder="project-slug" />
+            </FormField>
+          </div>
 
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <FormField label="Title" required>
-                    <input value={form.title} onChange={(e) => setForm((f) => ({ ...f, title: e.target.value, slug: slugify(e.target.value) }))} className={inputClass} placeholder="Project Title" required />
-                  </FormField>
-                  <FormField label="Slug">
-                    <input value={form.slug} onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))} className={inputClass} placeholder="project-slug" />
-                  </FormField>
-                </div>
+          <FormField label="Short Description">
+            <input value={form.shortDescription} onChange={(e) => setForm((f) => ({ ...f, shortDescription: e.target.value }))} className={inputClass} placeholder="Brief summary" />
+          </FormField>
 
-                <FormField label="Short Description">
-                  <input value={form.shortDescription} onChange={(e) => setForm((f) => ({ ...f, shortDescription: e.target.value }))} className={inputClass} placeholder="Brief summary" />
-                </FormField>
+          <FormField label="Description" required>
+            <textarea value={form.description} onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))} className={textareaClass} rows={3} required />
+          </FormField>
 
-                <FormField label="Description" required>
-                  <textarea value={form.description} onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))} className={textareaClass} rows={3} required />
-                </FormField>
+          <div className="grid grid-cols-2 gap-4">
+            <FormField label="Website URL">
+              <input value={form.websiteUrl} onChange={(e) => setForm((f) => ({ ...f, websiteUrl: e.target.value }))} className={inputClass} placeholder="https://..." />
+            </FormField>
+            <FormField label="GitHub URL">
+              <input value={form.githubUrl} onChange={(e) => setForm((f) => ({ ...f, githubUrl: e.target.value }))} className={inputClass} placeholder="https://github.com/..." />
+            </FormField>
+          </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <FormField label="Website URL">
-                    <input value={form.websiteUrl} onChange={(e) => setForm((f) => ({ ...f, websiteUrl: e.target.value }))} className={inputClass} placeholder="https://..." />
-                  </FormField>
-                  <FormField label="GitHub URL">
-                    <input value={form.githubUrl} onChange={(e) => setForm((f) => ({ ...f, githubUrl: e.target.value }))} className={inputClass} placeholder="https://github.com/..." />
-                  </FormField>
-                </div>
+          <div className="grid grid-cols-2 gap-4">
+            <FormField label="Category">
+              <select value={form.category} onChange={(e) => setForm((f) => ({ ...f, category: e.target.value }))} className={selectClass}>
+                {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
+              </select>
+            </FormField>
+            <FormField label="Completion Date">
+              <input type="date" value={form.completionDate} onChange={(e) => setForm((f) => ({ ...f, completionDate: e.target.value }))} className={inputClass} />
+            </FormField>
+          </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <FormField label="Category">
-                    <select value={form.category} onChange={(e) => setForm((f) => ({ ...f, category: e.target.value }))} className={selectClass}>
-                      {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
-                    </select>
-                  </FormField>
-                  <FormField label="Completion Date">
-                    <input type="date" value={form.completionDate} onChange={(e) => setForm((f) => ({ ...f, completionDate: e.target.value }))} className={inputClass} />
-                  </FormField>
-                </div>
+          <FormField label="Tech Stack" hint="Comma-separated: Next.js, MongoDB, Tailwind">
+            <input value={form.techStack} onChange={(e) => setForm((f) => ({ ...f, techStack: e.target.value }))} className={inputClass} placeholder="Next.js, MongoDB, Tailwind CSS" />
+          </FormField>
 
-                <FormField label="Tech Stack" hint="Comma-separated: Next.js, MongoDB, Tailwind">
-                  <input value={form.techStack} onChange={(e) => setForm((f) => ({ ...f, techStack: e.target.value }))} className={inputClass} placeholder="Next.js, MongoDB, Tailwind CSS" />
-                </FormField>
+          <FormField label="Client Name">
+            <input value={form.clientName} onChange={(e) => setForm((f) => ({ ...f, clientName: e.target.value }))} className={inputClass} placeholder="Client or company name" />
+          </FormField>
 
-                <FormField label="Client Name">
-                  <input value={form.clientName} onChange={(e) => setForm((f) => ({ ...f, clientName: e.target.value }))} className={inputClass} placeholder="Client or company name" />
-                </FormField>
+          <ImageUpload
+            value={form.thumbnail}
+            publicId={form.thumbnailPublicId}
+            folder="projects"
+            label="Project Thumbnail"
+            onChange={({ url, publicId }) => setForm((f) => ({ ...f, thumbnail: url, thumbnailPublicId: publicId }))}
+          />
 
-                <ImageUpload
-                  value={form.thumbnail}
-                  publicId={form.thumbnailPublicId}
-                  folder="projects"
-                  label="Project Thumbnail"
-                  onChange={({ url, publicId }) => setForm((f) => ({ ...f, thumbnail: url, thumbnailPublicId: publicId }))}
-                />
+          <div className="flex gap-6">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" checked={form.isActive} onChange={(e) => setForm((f) => ({ ...f, isActive: e.target.checked }))} className="w-4 h-4 accent-violet-500 rounded" />
+              <span className="text-sm text-slate-300">Active</span>
+            </label>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" checked={form.isFeatured} onChange={(e) => setForm((f) => ({ ...f, isFeatured: e.target.checked }))} className="w-4 h-4 accent-violet-500 rounded" />
+              <span className="text-sm text-slate-300">Featured</span>
+            </label>
+          </div>
 
-                <div className="flex gap-6">
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" checked={form.isActive} onChange={(e) => setForm((f) => ({ ...f, isActive: e.target.checked }))} className="w-4 h-4 accent-violet-500 rounded" />
-                    <span className="text-sm text-slate-300">Active</span>
-                  </label>
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" checked={form.isFeatured} onChange={(e) => setForm((f) => ({ ...f, isFeatured: e.target.checked }))} className="w-4 h-4 accent-violet-500 rounded" />
-                    <span className="text-sm text-slate-300">Featured</span>
-                  </label>
-                </div>
-
-                <div className="flex gap-3 pt-2">
-                  <Button type="submit" loading={saving} icon={<Save className="w-4 h-4" />}>
-                    {editId ? 'Update Project' : 'Create Project'}
-                  </Button>
-                  <Button type="button" variant="ghost" onClick={() => setShowForm(false)}>Cancel</Button>
-                </div>
-              </form>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          <div className="flex gap-3 pt-2">
+            <Button type="submit" loading={saving} icon={<Save className="w-4 h-4" />}>
+              {editId ? 'Update Project' : 'Create Project'}
+            </Button>
+            <Button type="button" variant="ghost" onClick={() => setShowForm(false)}>Cancel</Button>
+          </div>
+        </form>
+      </AdminModal>
     </div>
   );
 }

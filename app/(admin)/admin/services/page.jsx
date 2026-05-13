@@ -1,11 +1,12 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Edit2, Trash2, Eye, EyeOff, Star, StarOff, X, Save } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Plus, Edit2, Trash2, Eye, EyeOff, Star, X, Save } from 'lucide-react';
 import toast from 'react-hot-toast';
 import Button from '@/components/ui/Button';
 import ImageUpload from '@/components/admin/ImageUpload';
 import { AdminCard, AdminSection, FormField, inputClass, textareaClass, selectClass } from '@/components/admin/AdminCard';
+import AdminModal from '@/components/admin/AdminModal';
 import { staggerContainer, fadeUp } from '@/animations/variants';
 import { slugify } from '@/utils/helpers';
 
@@ -162,19 +163,8 @@ export default function ServicesAdmin() {
       </AdminSection>
 
       {/* Form Modal */}
-      <AnimatePresence>
-        {showForm && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-10 overflow-y-auto">
-            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowForm(false)} />
-            <motion.div initial={{ scale: 0.95, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.95, y: 20 }} className="relative w-full max-w-2xl glass-strong rounded-2xl p-6 mb-10">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-white font-bold text-lg">{editId ? 'Edit Service' : 'New Service'}</h2>
-                <button onClick={() => setShowForm(false)} className="text-slate-400 hover:text-white">
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-
-              <form onSubmit={handleSubmit} className="space-y-4">
+      <AdminModal open={showForm} onClose={() => setShowForm(false)} title={editId ? 'Edit Service' : 'New Service'}>
+        <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <FormField label="Title" required>
                     <input value={form.title} onChange={(e) => { setForm((f) => ({ ...f, title: e.target.value, slug: slugify(e.target.value) })); }} className={inputClass} placeholder="SEO Services" required />
@@ -270,11 +260,8 @@ export default function ServicesAdmin() {
                   </Button>
                   <Button type="button" variant="ghost" onClick={() => setShowForm(false)}>Cancel</Button>
                 </div>
-              </form>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+        </form>
+      </AdminModal>
     </div>
   );
 }

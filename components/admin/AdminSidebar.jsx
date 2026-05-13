@@ -143,7 +143,7 @@ export default function AdminSidebar({ mobileOpen, setMobileOpen }) {
             className="fixed inset-0 z-50 lg:hidden"
           >
             <div
-              className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+              className="absolute inset-0 bg-black/70 backdrop-blur-sm cursor-pointer"
               onClick={() => setMobileOpen(false)}
             />
             <motion.aside
