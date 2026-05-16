@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Zap, ArrowRight } from 'lucide-react';
+import { Menu, X, ArrowRight } from 'lucide-react';
+import HorizonIcon from '@/components/ui/HorizonIcon';
 
 const defaultLinks = [
   { label: 'Home', href: '/' },
@@ -72,13 +73,18 @@ export default function Navbar() {
           <div className="flex h-[76px] items-center justify-between gap-6 px-5 sm:px-6 lg:px-8">
 
             {/* LOGO */}
-            <Link href="/" className="flex shrink-0 items-center gap-3">
+            <Link href="/" className="flex shrink-0 items-center gap-2.5">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-700 shadow-sm">
-                <Zap className="h-[18px] w-[18px] text-white" strokeWidth={2.5} />
+                <HorizonIcon size={18} />
               </div>
-              <span className="hidden sm:block text-[15px] font-bold tracking-tight text-zinc-900 whitespace-nowrap">
-                {logo}
-              </span>
+              <div className="hidden sm:flex flex-col leading-none gap-[3px]" style={{ fontFamily: 'var(--font-logo), sans-serif' }}>
+                <span className="text-[21px] font-bold text-zinc-900 whitespace-nowrap" style={{ letterSpacing: '-0.04em' }}>
+                  Horizon
+                </span>
+                <span className="text-[10px] font-semibold text-zinc-400 uppercase whitespace-nowrap" style={{ letterSpacing: '0.22em' }}>
+                  Web Labs
+                </span>
+              </div>
             </Link>
 
             {/* DESKTOP NAV — centered pill */}

@@ -2,7 +2,8 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Zap, Mail, Phone, MapPin, ArrowUpRight } from 'lucide-react';
+import { Mail, Phone, MapPin, ArrowUpRight } from 'lucide-react';
+import HorizonIcon from '@/components/ui/HorizonIcon';
 import { FaXTwitter, FaLinkedinIn, FaGithub, FaInstagram, FaYoutube } from 'react-icons/fa6';
 
 const socialIcons = {
@@ -72,9 +73,12 @@ export default function Footer() {
           <div className="lg:col-span-1">
             <Link href="/" className="flex items-center gap-2.5 mb-5 w-fit group">
               <div className="w-9 h-9 rounded-xl bg-violet-600 flex items-center justify-center shrink-0 group-hover:bg-violet-500 transition-colors">
-                <Zap className="w-4 h-4 text-white" />
+                <HorizonIcon size={16} />
               </div>
-              <span className="font-bold text-white text-[15px] tracking-tight">Horizon Web Labs</span>
+              <div className="flex flex-col leading-none gap-[3px]" style={{ fontFamily: 'var(--font-logo), sans-serif' }}>
+                <span className="font-bold text-white text-[21px]" style={{ letterSpacing: '-0.04em' }}>Horizon</span>
+                <span className="text-[10px] font-semibold text-violet-300 uppercase" style={{ letterSpacing: '0.22em' }}>Web Labs</span>
+              </div>
             </Link>
             <p className="text-zinc-400 text-sm leading-relaxed mb-6 max-w-xs">
               {footer.tagline}
@@ -157,8 +161,26 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Location links — internal SEO links */}
+        <div className="mt-10 pt-8 border-t border-zinc-800/60">
+          <p className="text-zinc-500 text-xs font-bold uppercase tracking-widest mb-3">We Serve</p>
+          <div className="flex flex-wrap gap-x-5 gap-y-2">
+            {[
+              { label: 'Web Developer in Hyderabad', href: '/web-developer-hyderabad' },
+              { label: 'Web Developer in Andhra Pradesh', href: '/web-developer-andhra-pradesh' },
+              { label: 'Web Developer in Vizag', href: '/web-developer-vizag' },
+              { label: 'Web Developer in Vijayawada', href: '/web-developer-vijayawada' },
+              { label: 'Web Developer in India', href: '/web-developer-india' },
+            ].map((l) => (
+              <Link key={l.href} href={l.href} className="text-zinc-500 hover:text-violet-400 text-xs transition-colors">
+                {l.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+
         {/* Bottom bar */}
-        <div className="mt-14 pt-8 border-t border-zinc-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="mt-8 pt-6 border-t border-zinc-800 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-zinc-500 text-sm">{footer.copyright}</p>
           <div className="flex items-center gap-6 text-sm text-zinc-500">
             <Link href="/privacy" className="hover:text-zinc-300 transition-colors">Privacy Policy</Link>

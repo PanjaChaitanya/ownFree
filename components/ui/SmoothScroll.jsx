@@ -10,6 +10,11 @@ export default function SmoothScroll() {
       smoothWheel: true,
     });
 
+    // Emit a custom event each Lenis tick so ScrollStack can sync to it
+    lenis.on('scroll', () => {
+      window.dispatchEvent(new Event('lenis-scroll'));
+    });
+
     const raf = (time) => {
       lenis.raf(time);
       requestAnimationFrame(raf);

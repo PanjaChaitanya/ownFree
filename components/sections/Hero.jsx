@@ -4,6 +4,7 @@ import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import MagneticButton from '@/components/ui/MagneticButton';
+import FloatingLines from '@/components/ui/FloatingLines';
 
 function WordReveal({ text, className = '', delay = 0 }) {
   return (
@@ -60,12 +61,8 @@ const trusts = [
 
 export default function Hero() {
   const sectionRef = useRef(null);
-  const blob1Ref = useRef(null);
-  const blob2Ref = useRef(null);
 
   const { scrollY } = useScroll();
-  const blob1Y = useTransform(scrollY, [0, 600], [0, -120]);
-  const blob2Y = useTransform(scrollY, [0, 600], [0, -60]);
   const contentY = useTransform(scrollY, [0, 400], [0, -40]);
   const contentOpacity = useTransform(scrollY, [0, 300], [1, 0.4]);
 
@@ -100,27 +97,30 @@ export default function Hero() {
 
   return (
     <section ref={sectionRef} className="relative bg-white overflow-hidden pt-24 pb-12 lg:pt-32 lg:pb-20">
-      {/* Parallax background blobs */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div
-          className="absolute inset-0 dot-grid opacity-50"
-          style={{ maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)' }}
-        />
-        <motion.div
-          ref={blob1Ref}
-          className="absolute -top-40 right-0 w-[700px] h-[700px] rounded-full"
-          animate={{ scale: [1, 1.06, 1], opacity: [0.07, 0.12, 0.07] }}
-          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-          style={{ background: 'radial-gradient(circle, rgba(109,40,217,0.12) 0%, transparent 65%)', y: blob1Y }}
-        />
-        <motion.div
-          ref={blob2Ref}
-          className="absolute bottom-0 -left-32 w-[500px] h-[500px] rounded-full"
-          animate={{ scale: [1, 1.08, 1], opacity: [0.04, 0.08, 0.04] }}
-          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-          style={{ background: 'radial-gradient(circle, rgba(109,40,217,0.07) 0%, transparent 70%)', y: blob2Y }}
+      {/* Floating lines — canvas has pointer-events:none so buttons stay clickable;
+           mouse events are captured on window inside the component */}
+      <div className="absolute inset-0">
+        <FloatingLines
+          linesGradient={['#ede9fe', '#c4b5fd', '#8b5cf6', '#6d28d9', '#4c1d95']}
+          enabledWaves={['top', 'middle', 'bottom']}
+          lineCount={[6, 14, 8]}
+          lineDistance={[10, 5, 9]}
+          bendRadius={5}
+          bendStrength={-0.8}
+          mouseDamping={0.04}
+          interactive={true}
+          parallax={true}
+          parallaxStrength={0.1}
+          animationSpeed={0.45}
+          mixBlendMode="normal"
         />
       </div>
+
+      {/* Subtle dot grid overlay */}
+      <div
+        className="absolute inset-0 dot-grid opacity-30 pointer-events-none"
+        style={{ maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)' }}
+      />
 
       <motion.div
         style={{ y: contentY, opacity: contentOpacity }}

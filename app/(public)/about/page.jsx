@@ -1,6 +1,6 @@
 'use client';
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
 import { Target, Eye, CheckCircle, Users, Zap, ArrowRight } from 'lucide-react';
 import { staggerContainer, fadeUp, fadeLeft, fadeRight } from '@/animations/variants';
@@ -19,6 +19,82 @@ const defaultAbout = {
   ],
   team: [],
 };
+
+function JourneyTimeline({ journey }) {
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start 80%', 'end 50%'],
+  });
+  const lineScaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
+
+  return (
+    <div ref={containerRef} className="relative">
+      {/* Ghost track */}
+      <div className="absolute left-[25px] top-6 bottom-6 w-[2px] bg-zinc-100 hidden sm:block" />
+      {/* Scroll-drawn fill */}
+      <motion.div
+        className="absolute left-[25px] top-6 bottom-6 w-[2px] bg-gradient-to-b from-violet-300 via-violet-600 to-violet-900 hidden sm:block origin-top"
+        style={{ scaleY: lineScaleY }}
+      />
+
+      <div className="space-y-0">
+        {journey.map((item, i) => {
+          const isLatest = i === journey.length - 1;
+          return (
+            <div key={i} className="flex gap-8 items-start pb-10 last:pb-0">
+              {/* Badge */}
+              <div className="shrink-0 relative z-10 hidden sm:block">
+                <motion.div
+                  className="relative"
+                  initial={{ scale: 0.4, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  viewport={{ once: true, margin: '-60px' }}
+                  transition={{ type: 'spring', stiffness: 260, damping: 18, delay: 0.08 + i * 0.07 }}
+                >
+                  <div className={`w-[52px] h-[52px] rounded-xl flex items-center justify-center border-2 ${
+                    isLatest
+                      ? 'bg-violet-700 border-violet-700 shadow-lg shadow-violet-200'
+                      : 'bg-white border-violet-200 shadow-sm'
+                  }`}>
+                    <span className={`text-xs font-black leading-none ${isLatest ? 'text-white' : 'text-violet-700'}`}>
+                      {item.year}
+                    </span>
+                  </div>
+                  {isLatest && (
+                    <motion.div
+                      className="absolute inset-0 rounded-xl border-2 border-violet-400"
+                      animate={{ scale: [1, 1.45, 1], opacity: [0.7, 0, 0.7] }}
+                      transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
+                    />
+                  )}
+                </motion.div>
+              </div>
+
+              {/* Content */}
+              <motion.div
+                className="flex-1 pt-1 pb-2"
+                initial={{ opacity: 0, x: 28 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.55, delay: 0.12 + i * 0.07, ease: [0.25, 0.46, 0.45, 0.94] }}
+              >
+                <span className="sm:hidden inline-block px-2.5 py-0.5 rounded-full bg-violet-50 text-violet-700 text-xs font-bold mb-2 border border-violet-200">
+                  {item.year}
+                </span>
+                <p className="hidden sm:block text-violet-600 text-[11px] font-bold uppercase tracking-widest mb-1.5">
+                  {item.year}
+                </p>
+                <h3 className="text-[17px] font-black text-zinc-900 mb-1.5">{item.title}</h3>
+                <p className="text-zinc-500 text-sm leading-relaxed">{item.description}</p>
+              </motion.div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 
 const values = [
   { icon: Zap, title: 'Speed', description: 'We move fast without breaking things.' },
@@ -140,35 +216,19 @@ export default function AboutPage() {
       {about.journey?.length > 0 && (
         <section className="py-20 bg-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-14">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.55 }}
+              className="text-center mb-16"
+            >
               <span className="inline-block px-3 py-1 rounded-full bg-violet-50 border border-violet-200 text-violet-700 text-xs font-bold uppercase tracking-widest mb-4">
                 Our Journey
               </span>
               <h2 className="text-3xl sm:text-4xl font-black text-zinc-900">How We Got Here</h2>
-            </div>
-
-            <motion.div
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="space-y-0 relative"
-            >
-              <div className="absolute left-[39px] top-8 bottom-8 w-px bg-zinc-200 hidden sm:block" />
-              {about.journey.map((item, i) => (
-                <motion.div key={i} variants={fadeUp} className="flex gap-5 sm:gap-8 items-start pb-8 last:pb-0">
-                  <div className="relative z-10 shrink-0">
-                    <div className="w-[52px] h-[52px] sm:w-[52px] sm:h-[52px] rounded-xl bg-white border-2 border-violet-200 flex items-center justify-center shadow-sm">
-                      <span className="text-violet-700 text-xs font-black">{item.year}</span>
-                    </div>
-                  </div>
-                  <div className="pt-2.5">
-                    <h3 className="text-[17px] font-bold text-zinc-900 mb-1.5">{item.title}</h3>
-                    <p className="text-zinc-500 text-sm leading-relaxed">{item.description}</p>
-                  </div>
-                </motion.div>
-              ))}
             </motion.div>
+            <JourneyTimeline journey={about.journey} />
           </div>
         </section>
       )}

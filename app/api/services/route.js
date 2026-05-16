@@ -3,14 +3,15 @@ import { withAuth } from '@/lib/auth';
 import { ok, created, error, serverError } from '@/lib/response';
 import Service from '@/models/Service';
 
-// Public: GET all active services
+// GET services — public gets only active, admin passes all=true to get everything
 export async function GET(request) {
   try {
     await connectDB();
     const { searchParams } = new URL(request.url);
+    const all = searchParams.get('all') === 'true';
     const featured = searchParams.get('featured');
-    const query = { isActive: true };
-    if (featured === 'true') query.isFeatured = true;
+    const query = all ? {} : { isActive: true };
+    if (!all && featured === 'true') query.isFeatured = true;
     const services = await Service.find(query).sort({ order: 1, createdAt: -1 });
     return ok({ services });
   } catch (err) {

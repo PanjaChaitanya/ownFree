@@ -31,7 +31,7 @@ export default function ServicesAdmin() {
 
   const fetchServices = () => {
     setLoading(true);
-    fetch('/api/services')
+    fetch('/api/services?all=true')
       .then((r) => r.json())
       .then((json) => { if (json.success) setServices(json.data.services); })
       .catch(() => {})

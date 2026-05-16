@@ -107,15 +107,22 @@ function ServiceCard({ service }) {
 }
 
 export default function ServicesSection() {
-  const [services, setServices] = useState(defaultServices);
+  const [services, setServices] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch('/api/services')
       .then((r) => r.json())
       .then((json) => {
-        if (json.success && json.data.services?.length > 0) setServices(json.data.services);
+        if (json.success) {
+          const list = json.data?.services;
+          setServices(Array.isArray(list) && list.length > 0 ? list : defaultServices);
+        } else {
+          setServices(defaultServices);
+        }
       })
-      .catch(() => {});
+      .catch(() => setServices(defaultServices))
+      .finally(() => setLoading(false));
   }, []);
 
   const active = services.filter((s) => s.isActive !== false);
@@ -129,17 +136,29 @@ export default function ServicesSection() {
           subtitle="From concept to launch, we deliver full-stack solutions that grow with your business."
         />
 
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-60px' }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
-        >
-          {active.map((service) => (
-            <ServiceCard key={service._id} service={service} />
-          ))}
-        </motion.div>
+        {loading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="card card-brand p-6 animate-pulse">
+                <div className="w-11 h-11 rounded-xl bg-zinc-100 mb-5" />
+                <div className="h-4 bg-zinc-100 rounded mb-2 w-3/4" />
+                <div className="h-3 bg-zinc-100 rounded mb-1 w-full" />
+                <div className="h-3 bg-zinc-100 rounded w-5/6" />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            animate="visible"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
+          >
+            {active.map((service) => (
+              <ServiceCard key={service._id} service={service} />
+            ))}
+          </motion.div>
+        )}
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
