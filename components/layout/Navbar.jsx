@@ -47,8 +47,6 @@ export default function Navbar() {
     setMobileOpen(false);
   }, [pathname]);
 
-  const logo = navContent?.logo || 'Horizon Web Labs';
-
   const links = (navContent?.links || defaultLinks).filter(
     (link) => link.isActive !== false
   );
@@ -77,7 +75,7 @@ export default function Navbar() {
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-700 shadow-sm">
                 <HorizonIcon size={18} />
               </div>
-              <div className="hidden sm:flex flex-col leading-none gap-[3px]" style={{ fontFamily: 'var(--font-logo), sans-serif' }}>
+              <div className="flex flex-col leading-none gap-[3px]" style={{ fontFamily: 'var(--font-logo), sans-serif' }}>
                 <span className="text-[21px] font-bold text-zinc-900 whitespace-nowrap" style={{ letterSpacing: '-0.04em' }}>
                   Horizon
                 </span>
@@ -166,13 +164,14 @@ export default function Navbar() {
               className="absolute right-0 top-0 flex h-full w-[320px] max-w-[88%] flex-col bg-white shadow-2xl"
             >
               <div className="flex h-[76px] items-center justify-between border-b border-zinc-100 px-5">
-                <div className="flex min-w-0 items-center gap-3">
+                <div className="flex min-w-0 items-center gap-2.5">
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-violet-700">
-                    <Zap className="h-4 w-4 text-white" strokeWidth={2.5} />
+                    <HorizonIcon size={18} />
                   </div>
-                  <span className="truncate text-[15px] font-bold text-zinc-900">
-                    {logo}
-                  </span>
+                  <div className="flex flex-col leading-none gap-[3px]" style={{ fontFamily: 'var(--font-logo), sans-serif' }}>
+                    <span className="text-[21px] font-bold text-zinc-900" style={{ letterSpacing: '-0.04em' }}>Horizon</span>
+                    <span className="text-[10px] font-semibold text-zinc-400 uppercase" style={{ letterSpacing: '0.22em' }}>Web Labs</span>
+                  </div>
                 </div>
 
                 <button
