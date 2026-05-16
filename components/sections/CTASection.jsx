@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Zap } from 'lucide-react';
 import Link from 'next/link';
+import WordReveal from '@/components/ui/WordReveal';
 
 const defaultCTA = {
   heading: 'Ready to Build Something Amazing?',
@@ -57,7 +58,7 @@ export default function CTASection() {
             </motion.div>
 
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-5 leading-tight">
-              {cta.heading}
+              <WordReveal text={cta.heading} delay={0.2} />
             </h2>
             <p className="text-zinc-400 text-lg mb-10 max-w-xl mx-auto leading-relaxed">
               {cta.subheading}

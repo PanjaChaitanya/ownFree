@@ -90,7 +90,7 @@ float wave(vec2 uv, float offset, vec2 screenUv, vec2 mouseUv, bool shouldBend) 
   }
 
   float m = uv.y - y;
-  return 0.0175 / max(abs(m) + 0.01, 1e-3) + 0.01;
+  return 0.0175 / max(abs(m) + 0.01, 1e-3);
 }
 
 void mainImage(out vec4 fragColor, in vec2 fragCoord) {
@@ -147,9 +147,9 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
     }
   }
 
-  // Alpha derived from brightness — black background becomes transparent
+  // Only line-center pixels are opaque; background stays fully transparent
   float brightness = col.r * 0.299 + col.g * 0.587 + col.b * 0.114;
-  float alpha      = clamp(brightness * 5.0, 0.0, 1.0);
+  float alpha      = smoothstep(0.04, 0.28, brightness);
   fragColor = vec4(col, alpha);
 }
 
@@ -224,7 +224,7 @@ export default function FloatingLines({
     // alpha: true → transparent canvas so white page shows through
     const renderer = new WebGLRenderer({ antialias: true, alpha: true });
     renderer.setClearColor(0x000000, 0);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setPixelRatio(1); // always 1 — retina DPR quadruples pixel count for no visible gain
     renderer.domElement.style.width          = '100%';
     renderer.domElement.style.height         = '100%';
     // Canvas never blocks pointer events — we listen on window instead
@@ -321,8 +321,19 @@ export default function FloatingLines({
     }
 
     let raf = 0;
+    let visible = true;
+
+    // Pause GPU rendering when hero is scrolled out of view
+    const io = typeof IntersectionObserver !== 'undefined'
+      ? new IntersectionObserver(([e]) => { visible = e.isIntersecting; }, { threshold: 0 })
+      : null;
+    if (io) io.observe(container);
+
     const renderLoop = () => {
       if (!active) return;
+      raf = requestAnimationFrame(renderLoop);
+      if (!visible) return; // skip all GPU work when off-screen
+
       uniforms.iTime.value = clock.getElapsedTime();
 
       if (interactive) {
@@ -338,7 +349,6 @@ export default function FloatingLines({
       }
 
       renderer.render(scene, camera);
-      raf = requestAnimationFrame(renderLoop);
     };
     renderLoop();
 
@@ -346,6 +356,7 @@ export default function FloatingLines({
       active = false;
       cancelAnimationFrame(raf);
       if (ro) ro.disconnect();
+      if (io) io.disconnect();
       if (interactive) {
         window.removeEventListener('pointermove',  handlePointerMove);
         window.removeEventListener('pointerleave', handlePointerLeave);

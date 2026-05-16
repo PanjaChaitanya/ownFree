@@ -31,10 +31,10 @@ function JourneyTimeline({ journey }) {
   return (
     <div ref={containerRef} className="relative">
       {/* Ghost track */}
-      <div className="absolute left-[25px] top-6 bottom-6 w-[2px] bg-zinc-100 hidden sm:block" />
+      <div className="absolute left-[25px] top-6 bottom-6 w-[2px] bg-zinc-100" />
       {/* Scroll-drawn fill */}
       <motion.div
-        className="absolute left-[25px] top-6 bottom-6 w-[2px] bg-gradient-to-b from-violet-300 via-violet-600 to-violet-900 hidden sm:block origin-top"
+        className="absolute left-[25px] top-6 bottom-6 w-[2px] bg-gradient-to-b from-violet-300 via-violet-600 to-violet-900 origin-top"
         style={{ scaleY: lineScaleY }}
       />
 
@@ -42,9 +42,9 @@ function JourneyTimeline({ journey }) {
         {journey.map((item, i) => {
           const isLatest = i === journey.length - 1;
           return (
-            <div key={i} className="flex gap-8 items-start pb-10 last:pb-0">
-              {/* Badge */}
-              <div className="shrink-0 relative z-10 hidden sm:block">
+            <div key={i} className="flex gap-5 sm:gap-8 items-start pb-10 last:pb-0">
+              {/* Badge — visible on all sizes */}
+              <div className="shrink-0 relative z-10">
                 <motion.div
                   className="relative"
                   initial={{ scale: 0.4, opacity: 0 }}
@@ -73,18 +73,12 @@ function JourneyTimeline({ journey }) {
 
               {/* Content */}
               <motion.div
-                className="flex-1 pt-1 pb-2"
+                className="flex-1 pt-3 pb-2"
                 initial={{ opacity: 0, x: 28 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
                 transition={{ duration: 0.55, delay: 0.12 + i * 0.07, ease: [0.25, 0.46, 0.45, 0.94] }}
               >
-                <span className="sm:hidden inline-block px-2.5 py-0.5 rounded-full bg-violet-50 text-violet-700 text-xs font-bold mb-2 border border-violet-200">
-                  {item.year}
-                </span>
-                <p className="hidden sm:block text-violet-600 text-[11px] font-bold uppercase tracking-widest mb-1.5">
-                  {item.year}
-                </p>
                 <h3 className="text-[17px] font-black text-zinc-900 mb-1.5">{item.title}</h3>
                 <p className="text-zinc-500 text-sm leading-relaxed">{item.description}</p>
               </motion.div>

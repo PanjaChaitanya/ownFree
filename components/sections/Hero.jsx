@@ -96,14 +96,12 @@ export default function Hero() {
   const line1WordCount = line1 ? line1.split(' ').length : 0;
 
   return (
-    <section ref={sectionRef} className="relative bg-white overflow-hidden pt-24 pb-12 lg:pt-32 lg:pb-20">
-      {/* Floating lines — canvas has pointer-events:none so buttons stay clickable;
-           mouse events are captured on window inside the component */}
+    <section ref={sectionRef} className="relative pt-24 pb-12 lg:pt-32 lg:pb-20">
       <div className="absolute inset-0">
         <FloatingLines
-          linesGradient={['#ede9fe', '#c4b5fd', '#8b5cf6', '#6d28d9', '#4c1d95']}
+          linesGradient={['#c4b5fd', '#8b5cf6', '#6d28d9', '#4c1d95']}
           enabledWaves={['top', 'middle', 'bottom']}
-          lineCount={[6, 14, 8]}
+          lineCount={[4, 8, 5]}
           lineDistance={[10, 5, 9]}
           bendRadius={5}
           bendStrength={-0.8}
@@ -115,12 +113,6 @@ export default function Hero() {
           mixBlendMode="normal"
         />
       </div>
-
-      {/* Subtle dot grid overlay */}
-      <div
-        className="absolute inset-0 dot-grid opacity-30 pointer-events-none"
-        style={{ maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)' }}
-      />
 
       <motion.div
         style={{ y: contentY, opacity: contentOpacity }}
