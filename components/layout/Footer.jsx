@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, ArrowUpRight } from 'lucide-react';
 import HorizonIcon from '@/components/ui/HorizonIcon';
-import { FaXTwitter, FaLinkedinIn, FaGithub, FaInstagram, FaYoutube } from 'react-icons/fa6';
+import { FaXTwitter, FaLinkedinIn, FaGithub, FaInstagram, FaYoutube, FaWhatsapp } from 'react-icons/fa6';
 
 const socialIcons = {
   twitter: FaXTwitter,
@@ -34,6 +34,7 @@ const defaultFooter = {
         { label: 'About Us', href: '/about' },
         { label: 'Projects', href: '/projects' },
         { label: 'Blog', href: '/blog' },
+        { label: 'Resume Checker', href: '/resume-checker' },
         { label: 'Contact', href: '/contact' },
       ],
     },
@@ -41,7 +42,7 @@ const defaultFooter = {
 };
 
 const defaultContact = {
-  email: 'hello@horizonweblabs.com',
+  email: 'weblabshorizon@gmail.com',
   phone: '+1 (555) 000-0000',
 };
 
@@ -149,6 +150,19 @@ export default function Footer() {
                   </a>
                 </li>
               )}
+              <li>
+                <a
+                  href="https://wa.me/918985844558"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 text-zinc-400 hover:text-white text-sm transition-colors group"
+                >
+                  <div className="w-7 h-7 rounded-lg bg-zinc-800 group-hover:bg-[#25D366]/20 flex items-center justify-center shrink-0 transition-colors">
+                    <FaWhatsapp className="w-3.5 h-3.5" />
+                  </div>
+                  WhatsApp Us
+                </a>
+              </li>
               {contact.address && (
                 <li className="flex items-start gap-3 text-zinc-400 text-sm">
                   <div className="w-7 h-7 rounded-lg bg-zinc-800 flex items-center justify-center shrink-0 mt-0.5">

@@ -6,7 +6,7 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-logo', weight: ['500', '600', '700'] });
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://horizonweblabs.com';
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://horizonweblabs.vercel.app';
 
 export const metadata = {
   metadataBase: new URL(BASE_URL),
@@ -101,6 +101,9 @@ export const metadata = {
       'Top-rated web development in Hyderabad. React, Next.js, MERN stack, SEO & UI/UX for businesses across India.',
     images: ['/og-image.png'],
   },
+  verification: {
+    google: 'google832773e43b8eecfd',
+  },
   robots: {
     index: true,
     follow: true,
@@ -134,7 +137,7 @@ const organizationSchema = {
       image: { '@id': `${BASE_URL}/#logo` },
       description:
         'Horizon Web Labs is a top-rated web development company in Hyderabad, India. We specialize in React, Next.js, MERN stack development, SEO, UI/UX design, and custom digital solutions for startups and growing businesses.',
-      email: 'hello@horizonweblabs.com',
+      email: 'weblabshorizon@gmail.com',
       address: {
         '@type': 'PostalAddress',
         addressLocality: 'Hyderabad',

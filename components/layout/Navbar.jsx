@@ -13,6 +13,7 @@ const defaultLinks = [
   { label: 'Services', href: '/services' },
   { label: 'Projects', href: '/projects' },
   { label: 'Blog', href: '/blog' },
+  { label: 'Resume Checker', href: '/resume-checker' },
   { label: 'Contact', href: '/contact' },
 ];
 

@@ -77,7 +77,7 @@ const faqSchema = {
       name: 'How do I get started with Horizon Web Labs from Vizag?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Simply fill out our contact form or email us at hello@horizonweblabs.com. We\'ll schedule a free 30-minute consultation call to understand your project, and send you a detailed proposal within 24 hours. No in-person meeting required.',
+        text: 'Simply fill out our contact form or email us at weblabshorizon@gmail.com. We\'ll schedule a free 30-minute consultation call to understand your project, and send you a detailed proposal within 24 hours. No in-person meeting required.',
       },
     },
   ],
@@ -87,8 +87,8 @@ const breadcrumbSchema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://horizonweblabs.com' },
-    { '@type': 'ListItem', position: 2, name: 'Web Developer in Vizag', item: 'https://horizonweblabs.com/web-developer-vizag' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://horizonweblabs.vercel.app' },
+    { '@type': 'ListItem', position: 2, name: 'Web Developer in Vizag', item: 'https://horizonweblabs.vercel.app/web-developer-vizag' },
   ],
 };
 

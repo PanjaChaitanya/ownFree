@@ -33,9 +33,9 @@ const breadcrumbSchema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://horizonweblabs.com' },
-    { '@type': 'ListItem', position: 2, name: 'Andhra Pradesh', item: 'https://horizonweblabs.com/web-developer-andhra-pradesh' },
-    { '@type': 'ListItem', position: 3, name: 'Web Developer in Vijayawada', item: 'https://horizonweblabs.com/web-developer-vijayawada' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://horizonweblabs.vercel.app' },
+    { '@type': 'ListItem', position: 2, name: 'Andhra Pradesh', item: 'https://horizonweblabs.vercel.app/web-developer-andhra-pradesh' },
+    { '@type': 'ListItem', position: 3, name: 'Web Developer in Vijayawada', item: 'https://horizonweblabs.vercel.app/web-developer-vijayawada' },
   ],
 };
 

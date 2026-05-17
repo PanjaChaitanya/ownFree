@@ -122,7 +122,7 @@ const SiteContentSchema = new mongoose.Schema(
 
     // CONTACT INFO
     contact: {
-      email: { type: String, default: 'hello@horizonweblabs.com' },
+      email: { type: String, default: 'weblabshorizon@gmail.com' },
       phone: { type: String, default: '' },
       whatsapp: { type: String, default: '' },
       address: { type: String, default: '' },

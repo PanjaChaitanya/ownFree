@@ -2,23 +2,31 @@ import { connectDB } from '@/lib/db';
 import Project from '@/models/Project';
 import Blog from '@/models/Blog';
 
+const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://horizonweblabs.vercel.app';
 
 export default async function sitemap() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://horizonweblabs.com';
+  const now = new Date();
 
   const staticRoutes = [
-    { url: baseUrl,                                    lastModified: new Date(), changeFrequency: 'weekly',  priority: 1.0 },
-    { url: `${baseUrl}/about`,                         lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${baseUrl}/services`,                      lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.9 },
-    { url: `${baseUrl}/projects`,                      lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.9 },
-    { url: `${baseUrl}/blog`,                          lastModified: new Date(), changeFrequency: 'daily',   priority: 0.8 },
-    { url: `${baseUrl}/contact`,                       lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
-    // Location landing pages — high priority for local SEO
-    { url: `${baseUrl}/web-developer-hyderabad`,       lastModified: new Date(), changeFrequency: 'monthly', priority: 0.95 },
-    { url: `${baseUrl}/web-developer-andhra-pradesh`,  lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9  },
-    { url: `${baseUrl}/web-developer-vizag`,           lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9  },
-    { url: `${baseUrl}/web-developer-vijayawada`,      lastModified: new Date(), changeFrequency: 'monthly', priority: 0.85 },
-    { url: `${baseUrl}/web-developer-india`,           lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9  },
+    // Core pages
+    { url: `${BASE}`,                                    lastModified: now, changeFrequency: 'weekly',  priority: 1.0  },
+    { url: `${BASE}/about`,                              lastModified: now, changeFrequency: 'monthly', priority: 0.8  },
+    { url: `${BASE}/services`,                           lastModified: now, changeFrequency: 'weekly',  priority: 0.9  },
+    { url: `${BASE}/projects`,                           lastModified: now, changeFrequency: 'weekly',  priority: 0.85 },
+    { url: `${BASE}/blog`,                               lastModified: now, changeFrequency: 'daily',   priority: 0.8  },
+    { url: `${BASE}/contact`,                            lastModified: now, changeFrequency: 'monthly', priority: 0.75 },
+    { url: `${BASE}/pricing`,                            lastModified: now, changeFrequency: 'monthly', priority: 0.75 },
+
+    // Student & resume tools — new, high-intent pages
+    { url: `${BASE}/resume-checker`,                     lastModified: now, changeFrequency: 'weekly',  priority: 0.9  },
+    { url: `${BASE}/student-special`,                    lastModified: now, changeFrequency: 'weekly',  priority: 0.9  },
+
+    // Local SEO landing pages
+    { url: `${BASE}/web-developer-hyderabad`,            lastModified: now, changeFrequency: 'monthly', priority: 0.95 },
+    { url: `${BASE}/web-developer-andhra-pradesh`,       lastModified: now, changeFrequency: 'monthly', priority: 0.9  },
+    { url: `${BASE}/web-developer-vizag`,                lastModified: now, changeFrequency: 'monthly', priority: 0.9  },
+    { url: `${BASE}/web-developer-vijayawada`,           lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${BASE}/web-developer-india`,                lastModified: now, changeFrequency: 'monthly', priority: 0.9  },
   ];
 
   try {
@@ -29,17 +37,17 @@ export default async function sitemap() {
     ]);
 
     const projectRoutes = projects.map((p) => ({
-      url: `${baseUrl}/projects/${p.slug}`,
-      lastModified: p.updatedAt,
+      url: `${BASE}/projects/${p.slug}`,
+      lastModified: p.updatedAt || now,
       changeFrequency: 'monthly',
       priority: 0.7,
     }));
 
     const blogRoutes = blogs.map((b) => ({
-      url: `${baseUrl}/blog/${b.slug}`,
-      lastModified: b.updatedAt,
+      url: `${BASE}/blog/${b.slug}`,
+      lastModified: b.updatedAt || now,
       changeFrequency: 'weekly',
-      priority: 0.6,
+      priority: 0.65,
     }));
 
     return [...staticRoutes, ...projectRoutes, ...blogRoutes];

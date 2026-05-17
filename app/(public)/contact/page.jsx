@@ -24,7 +24,7 @@ const labelCls = 'block text-sm font-medium text-zinc-700 mb-1.5';
 
 export default function ContactPage() {
   const [contactInfo, setContactInfo] = useState({
-    email: 'hello@horizonweblabs.com',
+    email: 'weblabshorizon@gmail.com',
     phone: '+1 (555) 000-0000',
     whatsapp: '',
   });

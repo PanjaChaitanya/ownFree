@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   LayoutDashboard, Navigation, Star, Info, Briefcase, FolderOpen,
   MessageSquare, HelpCircle, Mail, Settings, FileText, AlignLeft,
-  ChevronLeft, ChevronRight, LogOut, Zap, Globe, X,
+  ChevronLeft, ChevronRight, LogOut, Zap, Globe, X, FileCheck2, GraduationCap,
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -21,6 +21,8 @@ const navItems = [
   { label: 'FAQs', href: '/admin/faqs', icon: HelpCircle },
   { label: 'Messages', href: '/admin/messages', icon: Mail },
   { label: 'Blogs', href: '/admin/blogs', icon: FileText },
+  { label: 'Resumes', href: '/admin/resumes', icon: FileCheck2 },
+  { label: 'Student Offers', href: '/admin/student', icon: GraduationCap },
   { label: 'Footer', href: '/admin/footer', icon: AlignLeft },
   { label: 'SEO Settings', href: '/admin/seo', icon: Globe },
   { label: 'Settings', href: '/admin/settings', icon: Settings },

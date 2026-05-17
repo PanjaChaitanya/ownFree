@@ -1,7 +1,7 @@
 export const metadata = {
   title: 'Hire a Web Developer in Hyderabad — Get a Free Quote',
   description:
-    'Contact Horizon Web Labs to hire a web developer in Hyderabad. Get a free project quote within 24 hours. We serve businesses across Andhra Pradesh, Telangana, and India. Email: hello@horizonweblabs.com',
+    'Contact Horizon Web Labs to hire a web developer in Hyderabad. Get a free project quote within 24 hours. We serve businesses across Andhra Pradesh, Telangana, and India. Email: weblabshorizon@gmail.com',
   keywords: [
     'hire web developer Hyderabad',
     'contact web developer Hyderabad',

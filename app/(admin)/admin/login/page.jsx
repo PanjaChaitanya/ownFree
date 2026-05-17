@@ -79,7 +79,7 @@ export default function AdminLoginPage() {
                 value={form.email}
                 onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
                 required
-                placeholder="admin@horizonweblabs.com"
+                placeholder="weblabshorizon@gmail.com"
                 className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-violet-500/60 transition-colors"
               />
             </div>

@@ -79,7 +79,7 @@ const DEFAULT_CONTENT = {
     secondaryCta: { label: 'View Pricing', href: '/pricing' },
   },
   contact: {
-    email: 'hello@horizonweblabs.com',
+    email: 'weblabshorizon@gmail.com',
     phone: '+1 (555) 000-0000',
     whatsapp: '+15550000000',
     address: 'Remote — Worldwide',

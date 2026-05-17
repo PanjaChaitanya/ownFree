@@ -3,7 +3,7 @@ import Project from '@/models/Project';
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://horizonweblabs.com';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://horizonweblabs.vercel.app';
 
   try {
     await connectDB();

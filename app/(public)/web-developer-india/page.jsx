@@ -91,8 +91,8 @@ const breadcrumbSchema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://horizonweblabs.com' },
-    { '@type': 'ListItem', position: 2, name: 'Web Developer in India', item: 'https://horizonweblabs.com/web-developer-india' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://horizonweblabs.vercel.app' },
+    { '@type': 'ListItem', position: 2, name: 'Web Developer in India', item: 'https://horizonweblabs.vercel.app/web-developer-india' },
   ],
 };
 

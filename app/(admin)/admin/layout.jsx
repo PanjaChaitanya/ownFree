@@ -16,6 +16,8 @@ const titleMap = {
   '/admin/faqs': 'FAQs',
   '/admin/messages': 'Contact Messages',
   '/admin/blogs': 'Blog Posts',
+  '/admin/resumes': 'Resume Submissions',
+  '/admin/student': 'Student Offers',
   '/admin/footer': 'Footer Settings',
   '/admin/seo': 'SEO Settings',
   '/admin/settings': 'General Settings',

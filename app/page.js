@@ -6,6 +6,7 @@ import FeaturedProjects from '@/components/sections/FeaturedProjects';
 import WhyUs from '@/components/sections/WhyUs';
 import ProcessSection from '@/components/sections/ProcessSection';
 import TechStack from '@/components/sections/TechStack';
+import StudentCTASection from '@/components/sections/StudentCTASection';
 import Testimonials from '@/components/sections/Testimonials';
 import FAQSection from '@/components/sections/FAQSection';
 import CTASection from '@/components/sections/CTASection';
@@ -34,6 +35,7 @@ export default function HomePage() {
         <WhyUs />
         <ProcessSection />
         <TechStack />
+        <StudentCTASection />
         <Testimonials />
         <FAQSection />
         <CTASection />
