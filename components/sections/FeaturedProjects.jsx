@@ -1,6 +1,6 @@
 'use client';
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import { motion, useInView } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ExternalLink, ArrowRight, GitFork } from 'lucide-react';
@@ -130,6 +130,8 @@ function ProjectCard({ project }) {
 
 export default function FeaturedProjects() {
   const [projects, setProjects] = useState(defaultProjects);
+  const gridRef = useRef(null);
+  const isInView = useInView(gridRef, { once: true, margin: '-60px' });
 
   useEffect(() => {
     fetch('/api/projects?featured=true&limit=6')
@@ -159,10 +161,10 @@ export default function FeaturedProjects() {
         </div>
 
         <motion.div
+          ref={gridRef}
           variants={staggerContainer}
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-60px' }}
+          animate={isInView ? 'visible' : 'hidden'}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
         >
           {projects.filter((p) => p.isActive !== false).slice(0, 6).map((project) => (
