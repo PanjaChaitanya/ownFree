@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, ArrowUpRight } from 'lucide-react';
-import HorizonIcon from '@/components/ui/HorizonIcon';
+import Image from 'next/image';
 import { FaXTwitter, FaLinkedinIn, FaGithub, FaInstagram, FaYoutube, FaWhatsapp } from 'react-icons/fa6';
 
 const socialIcons = {
@@ -73,8 +73,8 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <Link href="/" className="flex items-center gap-2.5 mb-5 w-fit group">
-              <div className="w-9 h-9 rounded-xl bg-violet-600 flex items-center justify-center shrink-0 group-hover:bg-violet-500 transition-colors">
-                <HorizonIcon size={16} />
+              <div className="w-auto h-9 shrink-0">
+                <Image src="/H-logo-removebg.png" alt="Horizon Web Labs" width={36} height={36} className="object-cover w-full h-full" />
               </div>
               <div className="flex flex-col leading-none gap-[3px]" style={{ fontFamily: 'var(--font-logo), sans-serif' }}>
                 <span className="font-bold text-white text-[21px]" style={{ letterSpacing: '-0.04em' }}>Horizon</span>
