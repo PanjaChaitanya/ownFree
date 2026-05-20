@@ -181,9 +181,13 @@ export default function Footer() {
           <div className="flex flex-wrap gap-x-5 gap-y-2">
             {[
               { label: 'Web Developer in Hyderabad', href: '/web-developer-hyderabad' },
+              { label: 'Web Developer in Telangana', href: '/web-developer-telangana' },
               { label: 'Web Developer in Andhra Pradesh', href: '/web-developer-andhra-pradesh' },
               { label: 'Web Developer in Vizag', href: '/web-developer-vizag' },
               { label: 'Web Developer in Vijayawada', href: '/web-developer-vijayawada' },
+              { label: 'Web Developer in Guntur', href: '/web-developer-guntur' },
+              { label: 'Web Developer in Tirupati', href: '/web-developer-tirupati' },
+              { label: 'Web Developer in Bangalore', href: '/web-developer-bangalore' },
               { label: 'Web Developer in India', href: '/web-developer-india' },
             ].map((l) => (
               <Link key={l.href} href={l.href} className="text-zinc-500 hover:text-violet-400 text-xs transition-colors">

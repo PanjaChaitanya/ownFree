@@ -1,3 +1,14 @@
+const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://horizonweblabs.vercel.app';
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: BASE },
+    { '@type': 'ListItem', position: 2, name: 'Contact', item: `${BASE}/contact` },
+  ],
+};
+
 export const metadata = {
   title: 'Hire a Web Developer in Hyderabad — Get a Free Quote',
   description:
@@ -22,5 +33,10 @@ export const metadata = {
 };
 
 export default function ContactLayout({ children }) {
-  return children;
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      {children}
+    </>
+  );
 }

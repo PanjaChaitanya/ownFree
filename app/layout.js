@@ -1,7 +1,11 @@
 import { Inter, Space_Grotesk } from 'next/font/google';
 import { Toaster } from 'react-hot-toast';
+import Script from 'next/script';
 import ClickSpark from '@/components/ui/ClickSpark';
 import './globals.css';
+
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
+const CLARITY_ID = process.env.NEXT_PUBLIC_CLARITY_ID;
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-logo', weight: ['500', '600', '700'] });
@@ -100,6 +104,13 @@ export const metadata = {
     description:
       'Top-rated web development in Hyderabad. React, Next.js, MERN stack, SEO & UI/UX for businesses across India.',
     images: ['/og-image.png'],
+  },
+  icons: {
+    icon: [
+      { url: '/icon.png', type: 'image/png' },
+    ],
+    apple: '/apple-icon.png',
+    shortcut: '/icon.png',
   },
   verification: {
     google: 'google832773e43b8eecfd',
@@ -266,6 +277,19 @@ export default function RootLayout({ children }) {
         />
         <ClickSpark />
         {children}
+        {GA_ID && (
+          <>
+            <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
+            <Script id="ga-init" strategy="afterInteractive">
+              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');`}
+            </Script>
+          </>
+        )}
+        {CLARITY_ID && (
+          <Script id="clarity" strategy="afterInteractive">
+            {`(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","${CLARITY_ID}");`}
+          </Script>
+        )}
         <Toaster
           position="top-right"
           toastOptions={{

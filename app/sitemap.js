@@ -27,6 +27,10 @@ export default async function sitemap() {
     { url: `${BASE}/web-developer-vizag`,                lastModified: now, changeFrequency: 'monthly', priority: 0.9  },
     { url: `${BASE}/web-developer-vijayawada`,           lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${BASE}/web-developer-india`,                lastModified: now, changeFrequency: 'monthly', priority: 0.9  },
+    { url: `${BASE}/web-developer-telangana`,            lastModified: now, changeFrequency: 'monthly', priority: 0.9  },
+    { url: `${BASE}/web-developer-tirupati`,             lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${BASE}/web-developer-guntur`,               lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${BASE}/web-developer-bangalore`,            lastModified: now, changeFrequency: 'monthly', priority: 0.9  },
   ];
 
   try {

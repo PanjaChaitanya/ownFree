@@ -1,3 +1,14 @@
+const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://horizonweblabs.vercel.app';
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: BASE },
+    { '@type': 'ListItem', position: 2, name: 'Resume Checker', item: `${BASE}/resume-checker` },
+  ],
+};
+
 export const metadata = {
   title: 'Free Resume ATS Score Checker | Instant Resume Analysis — Horizon Web Labs',
   description:
@@ -35,5 +46,10 @@ export const metadata = {
 };
 
 export default function ResumeCheckerLayout({ children }) {
-  return children;
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      {children}
+    </>
+  );
 }
