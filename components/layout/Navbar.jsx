@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 import { Menu, X, ArrowRight } from 'lucide-react';
-import HorizonIcon from '@/components/ui/HorizonIcon';
 
 const defaultLinks = [
   { label: 'Home', href: '/' },
@@ -72,9 +72,9 @@ export default function Navbar() {
           <div className="flex h-[76px] items-center justify-between gap-6 px-5 sm:px-6 lg:px-8">
 
             {/* LOGO */}
-            <Link href="/" className="flex shrink-0 items-center gap-2.5">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-700 shadow-sm">
-                <HorizonIcon size={18} />
+            <Link href="/" className="flex shrink-0 items-center gap-1">
+              <div className="h-10 w-auto shrink-0">
+                <Image src="/H-logo.jpeg" alt="Horizon Web Labs" width={40} height={40} className="object-cover w-full h-full" />
               </div>
               <div className="flex flex-col leading-none gap-[3px]" style={{ fontFamily: 'var(--font-logo), sans-serif' }}>
                 <span className="text-[21px] font-bold text-zinc-900 whitespace-nowrap" style={{ letterSpacing: '-0.04em' }}>
@@ -166,8 +166,8 @@ export default function Navbar() {
             >
               <div className="flex h-[76px] items-center justify-between border-b border-zinc-100 px-5">
                 <div className="flex min-w-0 items-center gap-2.5">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-violet-700">
-                    <HorizonIcon size={18} />
+                  <div className="h-10 w-10 rounded-xl overflow-hidden shrink-0">
+                    <Image src="/H-logo.jpeg" alt="Horizon Web Labs" width={40} height={40} className="object-cover w-full h-full" />
                   </div>
                   <div className="flex flex-col leading-none gap-[3px]" style={{ fontFamily: 'var(--font-logo), sans-serif' }}>
                     <span className="text-[21px] font-bold text-zinc-900" style={{ letterSpacing: '-0.04em' }}>Horizon</span>

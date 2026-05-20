@@ -49,7 +49,7 @@ Then POST to `/api/auth/setup`:
 ```json
 {
   "name": "Admin",
-  "email": "admin@horizonweblabs.com",
+  "email": "weblabshorizon@gmail.com",
   "password": "your-password"
 }
 ```

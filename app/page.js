@@ -1,5 +1,7 @@
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import StudentBar from '@/components/ui/StudentBar';
+import WhatsAppButton from '@/components/ui/WhatsAppButton';
 import Hero from '@/components/sections/Hero';
 import ServicesSection from '@/components/sections/ServicesSection';
 import FeaturedProjects from '@/components/sections/FeaturedProjects';
@@ -41,6 +43,8 @@ export default function HomePage() {
         <CTASection />
       </main>
       <Footer />
+      <StudentBar />
+      <WhatsAppButton />
     </>
   );
 }
